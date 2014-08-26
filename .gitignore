@@ -1,4 +1,7 @@
+.buildpath
+.project
 .modgit/
+.settings/
 app/code/community/Find/
 app/code/community/Phoenix/
 app/code/community/Cm/
