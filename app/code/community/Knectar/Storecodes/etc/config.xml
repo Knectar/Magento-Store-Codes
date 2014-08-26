@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Knectar_Storecodes>
+            <version>0.0.1</version>
+        </Knectar_Storecodes>
+    </modules>
+
+    <global>
+        <helpers>
+            <knectar_storecodes>
+                <class>Knectar_Storecodes_Helper</class>
+            </knectar_storecodes>
+        </helpers>
+        <models>
+            <knectar_storecodes>
+                <class>Knectar_Storecodes_Model</class>
+            </knectar_storecodes>
+            <cms_resource>
+                <rewrite>
+                    <page>Knectar_Storecodes_Model_Resource_Cms_Page</page>
+                </rewrite>
+            </cms_resource>
+            <core>
+                <rewrite>
+                    <url>Knectar_Storecodes_Model_Url</url>
+                </rewrite>
+            </core>
+        </models>
+        <events>
+            <!-- Insert custom controller before others so when forwarded to noRoute page we can intercept -->
+            <controller_front_init_before>
+                <observers>
+                    <knectar_storecodes>
+                        <class>Knectar_Storecodes_Controller_Router</class>
+                        <method>initControllerRouters</method>
+                    </knectar_storecodes>
+                </observers>
+            </controller_front_init_before>
+        </events>
+    </global>
+
+    <default>
+        <web>
+            <url>
+                <use_store_default>1</use_store_default>
+            </url>
+        </web>
+    </default>
+</config>

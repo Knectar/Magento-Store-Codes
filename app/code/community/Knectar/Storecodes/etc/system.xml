@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <web>
+            <groups>
+                <url>
+                    <fields>
+                        <use_store_default translate="label comment" module="knectar_storecodes">
+                            <depends>
+                                <use_store>1</use_store>
+                            </depends>
+                            <label><![CDATA[&hellip;and default store view]]></label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>11</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[&ldquo;No&rdquo; to use base URL for default store links. &ldquo;Yes&rdquo; to auto-redirect to an URL with store code.]]></comment>
+                        </use_store_default>
+                    </fields>
+                </url>
+            </groups>
+        </web>
+    </sections>
+</config>
