@@ -1,0 +1,16 @@
+{
+  "name":"knectar/storecodes",
+  "type":"magento-module",
+  "license":"OSL-3.0",
+  "homepage":"https://github.com/Knectar/Magento-Store-Codes",
+  "description":"Better control over URL codes in a multi-store setup.",
+  "authors":[
+    {
+      "name":"Daniel Deady",
+      "email":"daniel.deady@knectar.com"
+    }
+  ],
+  "suggest":{
+    "magento-hackathon/magento-composer-installer":"*"
+  }
+}
