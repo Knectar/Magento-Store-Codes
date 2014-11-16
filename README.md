@@ -7,7 +7,10 @@ This is bad SEO and a bad experience for customers too, who will see an unhelpfu
 
 Installation
 ------------
-Simply copy/merge this `app` directory with your own, then clear Magento's cache.
+Simply copy/merge this `app` directory with your own, then clear Magento's cache.  Composer users can enter this command:
+
+    composer config repositories.firegento composer http://packages.firegento.com
+    composer require knectar/storecodes:dev-master
 
 Usage
 -----
