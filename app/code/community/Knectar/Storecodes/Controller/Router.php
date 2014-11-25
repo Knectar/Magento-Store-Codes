@@ -60,15 +60,18 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
             $base = $request->getBaseUrl() . DS;
             $path = $request->getOriginalRequest()->getRequestUri();
             $path = substr($path, strlen($base));
+            /* @var $helper Knectar_Storecodes_Helper_Data */
+            $helper = Mage::helper('knectar_storecodes');
+            $redirect = $helper->getRedirectCode();
 
             if (!Mage::getStoreConfigFlag('web/url/use_store_default')) {
                 // simply put empty request back in router loop
                 $request->setActionName('');
             }
-            elseif ($request->getMethod() != 'post') {
+            elseif (($request->getMethod() != 'post') && $redirect) {
                 // send a 302 (Found) redirect
                 Mage::app()->getResponse()
-                    ->setRedirect(Mage::getUrl('', array('_direct' => $path)))
+                    ->setRedirect(Mage::getUrl('', array('_direct' => $path)), $redirect)
                     ->sendResponse();
                 exit();
             }
