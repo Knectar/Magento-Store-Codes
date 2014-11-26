@@ -47,6 +47,7 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
 
     /**
      * Redirect bad URLs when they are missing a store code
+     * or have a store code which they shouldn't
      * 
      * @param Mage_Core_Controller_Request_Http $request
      * @see Mage_Core_Controller_Request_Http::setPathInfo
@@ -54,22 +55,36 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
     public function match(Zend_Controller_Request_Http $request)
     {
         $targetPath = "{$request->getModuleName()}/{$request->getControllerName()}/{$request->getActionName()}";
+        /* @var $helper Knectar_Storecodes_Helper_Data */
+        $helper = Mage::helper('knectar_storecodes');
 
         // setPathInfo() has determined there is no store code
         if ($targetPath == '//noRoute') {
             $base = $request->getBaseUrl() . DS;
             $path = $request->getOriginalRequest()->getRequestUri();
             $path = substr($path, strlen($base));
-            /* @var $helper Knectar_Storecodes_Helper_Data */
-            $helper = Mage::helper('knectar_storecodes');
             $redirect = $helper->getRedirectCode();
 
-            if (!Mage::getStoreConfigFlag('web/url/use_store_default')) {
+            if (! Mage::getStoreConfigFlag('web/url/use_store_default')) {
                 // simply put empty request back in router loop
                 $request->setActionName('');
             }
             elseif (($request->getMethod() != 'post') && $redirect) {
                 // send a 302 (Found) redirect
+                Mage::app()->getResponse()
+                    ->setRedirect(Mage::getUrl('', array('_direct' => $path)), $redirect)
+                    ->sendResponse();
+                exit();
+            }
+        }
+        // store is valid but is it wanted?
+        elseif (! Mage::getStoreConfigFlag('web/url/use_store_default')) {
+            $storeCode = $helper->getStoreCode($request);
+            if ($storeCode === Mage::app()->getDefaultStoreView()->getCode()) {
+                $storeCode = preg_quote($storeCode);
+                $path = $request->getOriginalRequest()->getRequestUri();
+                $path = preg_replace("#/{$storeCode}(/|$)#", '', $path, 1);
+                $redirect = $helper->getRedirectCode();
                 Mage::app()->getResponse()
                     ->setRedirect(Mage::getUrl('', array('_direct' => $path)), $redirect)
                     ->sendResponse();
