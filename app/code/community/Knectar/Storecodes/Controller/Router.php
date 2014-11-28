@@ -78,13 +78,12 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
             }
         }
         // store is valid but is it wanted?
-        elseif (! Mage::getStoreConfigFlag('web/url/use_store_default')) {
+        elseif (! Mage::getStoreConfigFlag('web/url/use_store_default') && ($redirect = $helper->getRedirectCode())) {
             $storeCode = $helper->getStoreCode($request);
             if ($storeCode === Mage::app()->getDefaultStoreView()->getCode()) {
                 $storeCode = preg_quote($storeCode);
                 $path = $request->getOriginalRequest()->getRequestUri();
                 $path = preg_replace("#/{$storeCode}(/|$)#", '', $path, 1);
-                $redirect = $helper->getRedirectCode();
                 Mage::app()->getResponse()
                     ->setRedirect(Mage::getUrl('', array('_direct' => $path)), $redirect)
                     ->sendResponse();
