@@ -36,7 +36,7 @@ class Knectar_Storecodes_Helper_Data extends Mage_Core_Helper_Data
      * The configured HTTP response code set in admin.
      */
     public function getRedirectCode() {
-        $code = (int) Mage::getStoreConfig('web/url/redirect_to_store');
+        $code = (int) Mage::getStoreConfig('web/url/redirect_to_base');
         return $code === 1 ? 302 : $code;
     }
 
