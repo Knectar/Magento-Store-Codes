@@ -10,7 +10,7 @@ Installation
 Simply copy/merge this `app` directory with your own, then clear Magento's cache.  Composer users can enter this command:
 
     composer config repositories.firegento composer http://packages.firegento.com
-    composer require knectar/storecodes:dev-master
+    composer require knectar/storecodes
 
 Usage
 -----
