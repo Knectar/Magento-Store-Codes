@@ -42,6 +42,13 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
             /* @var $front Mage_Core_Controller_Varien_Front */
             $front = $observer->getFront();
             $front->addRouter('knectar_storecodes', $this);
+
+            // override default store so getBaseUrl() will not always include code
+            // FIXME only affects routed pages not stand alone scripts
+            if (!Mage::getStoreConfigFlag('web/url/use_store_default')) {
+                // override is temporary/dynamic
+                Mage::app()->getDefaultStoreView()->setConfig('web/url/use_store', false);
+            }
         }
     }
 
