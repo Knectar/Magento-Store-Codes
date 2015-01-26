@@ -52,11 +52,6 @@
                     <page>Knectar_Storecodes_Model_Resource_Cms_Page</page>
                 </rewrite>
             </cms_resource>
-            <core>
-                <rewrite>
-                    <url>Knectar_Storecodes_Model_Url</url>
-                </rewrite>
-            </core>
         </models>
         <events>
             <!-- Insert custom controller before others so when forwarded to noRoute page we can intercept -->
