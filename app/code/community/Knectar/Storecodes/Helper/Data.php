@@ -67,4 +67,14 @@ class Knectar_Storecodes_Helper_Data extends Mage_Core_Helper_Data
         $code = $this->getStoreCode($request);
         return Mage::getModel('core/store')->load($code, 'code')->getId();
     }
+
+    /**
+     * Find the 'default' store view for current store & website
+     * 
+     * @return Mage_Core_Model_Store
+     */
+    public function getGroupDefaultStore()
+    {
+        return Mage::app()->getStore()->getGroup()->getDefaultStore();
+    }
 }

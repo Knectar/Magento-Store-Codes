@@ -38,7 +38,9 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
     public function initControllerRouters(Varien_Event_Observer $observer)
     {
         // if store code is supposed to be embedded in URL
-        if (Mage::getStoreConfigFlag("web/url/use_store")) {
+        // skip admin always so URLs always begin with the backend code
+        // not being able to control backend prefix is vulnerable
+        if (Mage::getStoreConfigFlag("web/url/use_store") && !Mage::app()->getStore()->isAdmin()) {
             /* @var $front Mage_Core_Controller_Varien_Front */
             $front = $observer->getFront();
             $front->addRouter('knectar_storecodes', $this);
@@ -47,7 +49,8 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
             // FIXME only affects routed pages not stand alone scripts
             if (!Mage::getStoreConfigFlag('web/url/use_store_default')) {
                 // override is temporary/dynamic
-                Mage::app()->getDefaultStoreView()->setConfig('web/url/use_store', false);
+                Mage::helper('knectar_storecodes')->getGroupDefaultStore()
+                    ->setConfig('web/url/use_store', false);
             }
         }
     }
@@ -87,7 +90,8 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
         // store is valid but is it wanted?
         elseif (! Mage::getStoreConfigFlag('web/url/use_store_default') && ($redirect = $helper->getRedirectCode())) {
             $storeCode = $helper->getStoreCode($request);
-            if ($storeCode === Mage::app()->getDefaultStoreView()->getCode()) {
+            $defaultCode = Mage::helper('knectar_storecodes')->getGroupDefaultStore()->getCode();
+            if ($storeCode === $defaultCode) {
                 $storeCode = preg_quote($storeCode);
                 $path = $request->getOriginalRequest()->getRequestUri();
                 $path = preg_replace("#/{$storeCode}(/|$)#", '', $path, 1);
