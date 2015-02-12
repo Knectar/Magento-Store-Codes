@@ -69,12 +69,22 @@ class Knectar_Storecodes_Helper_Data extends Mage_Core_Helper_Data
     }
 
     /**
-     * Find the 'default' store view for current store & website
+     * Find the 'default' store view for current store group
      * 
      * @return Mage_Core_Model_Store
      */
     public function getGroupDefaultStore()
     {
         return Mage::app()->getStore()->getGroup()->getDefaultStore();
+    }
+
+    /**
+     * Find the 'default' store view for current store & website
+     * 
+     * @return Mage_Core_Model_Store
+     */
+    public function getWebsiteDefaultStore()
+    {
+        return Mage::app()->getStore()->getWebsite()->getDefaultStore();
     }
 }

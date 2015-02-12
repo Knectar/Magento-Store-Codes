@@ -49,7 +49,7 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
             // FIXME only affects routed pages not stand alone scripts
             if (!Mage::getStoreConfigFlag('web/url/use_store_default')) {
                 // override is temporary/dynamic
-                Mage::helper('knectar_storecodes')->getGroupDefaultStore()
+                Mage::helper('knectar_storecodes')->getWebsiteDefaultStore()
                     ->setConfig('web/url/use_store', false);
             }
         }
@@ -90,7 +90,7 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
         // store is valid but is it wanted?
         elseif (! Mage::getStoreConfigFlag('web/url/use_store_default') && ($redirect = $helper->getRedirectCode())) {
             $storeCode = $helper->getStoreCode($request);
-            $defaultCode = Mage::helper('knectar_storecodes')->getGroupDefaultStore()->getCode();
+            $defaultCode = $helper->getWebsiteDefaultStore()->getCode();
             if ($storeCode === $defaultCode) {
                 $storeCode = preg_quote($storeCode);
                 $path = $request->getOriginalRequest()->getRequestUri();
