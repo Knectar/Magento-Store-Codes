@@ -33,7 +33,7 @@
 <config>
     <modules>
         <Knectar_Storecodes>
-            <version>0.0.1</version>
+            <version>0.1.0</version>
         </Knectar_Storecodes>
     </modules>
 
@@ -63,6 +63,33 @@
                     </knectar_storecodes>
                 </observers>
             </controller_front_init_before>
+
+            <!-- Overwrite store code setting when it is safe -->
+            <controller_front_init_routers>
+                <observers>
+                    <knectar_storecodes>
+                        <class>Knectar_Storecodes_Model_Domains</class>
+                        <method>updateConfig</method>
+                    </knectar_storecodes>
+                </observers>
+            </controller_front_init_routers>
+            <!-- cron.php has it's own events -->
+            <always>
+                <observers>
+                    <knectar_storecodes>
+                        <class>Knectar_Storecodes_Model_Domains</class>
+                        <method>updateConfig</method>
+                    </knectar_storecodes>
+                </observers>
+            </always>
+            <default>
+                <observers>
+                    <knectar_storecodes>
+                        <class>Knectar_Storecodes_Model_Domains</class>
+                        <method>updateConfig</method>
+                    </knectar_storecodes>
+                </observers>
+            </default>
         </events>
     </global>
 
