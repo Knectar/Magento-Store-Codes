@@ -40,7 +40,7 @@ class Knectar_Storecodes_Model_Resource_Cms_Page extends Mage_Cms_Model_Resource
     {
         $select = parent::_getLoadSelect($field, $value, $object);
 
-        if (Mage::getStoreConfigFlag("web/url/use_store") && Mage::getStoreConfigFlag('web/url/use_store_default')) {
+        if ($object->getStoreId() && Mage::getStoreConfigFlag('web/url/use_store') && Mage::getStoreConfigFlag('web/url/use_store_default')) {
             $storeId = Mage::helper('knectar_storecodes')->getRequestedStoreId(Mage::app()->getRequest());
             if (is_null($storeId)) {
                 $select
