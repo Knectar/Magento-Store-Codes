@@ -69,7 +69,7 @@ class Knectar_Storecodes_Controller_Router extends Mage_Core_Controller_Varien_R
         $helper = Mage::helper('knectar_storecodes');
 
         // setPathInfo() has determined there is no store code
-        if ($targetPath == '//noRoute') {
+        if (($targetPath == '//noRoute') || ($targetPath == 'pagecache/request/noRoute')) {
             $base = $request->getBaseUrl() . DS;
             $path = $request->getOriginalRequest()->getRequestUri();
             $path = substr($path, strlen($base));
